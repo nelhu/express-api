@@ -15,6 +15,10 @@ app.get('/time', (req, res) => {
   res.send(Date.now());
 });
 
+app.get('/a', (req, res) => {
+  res.send(`a`);
+});
+
 app.get('/error', (req, res) => {
   throw new Error('error occurred');
 });
