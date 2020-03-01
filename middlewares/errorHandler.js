@@ -1,4 +1,8 @@
-module.exports = function(err, req, res) {
-  console.error(err.stack);
-  res.status(500).send(err.message);
+const { succeed, failed } = require('../utils');
+
+module.exports = function(err, req, res, next) {
+  if (res.headerSent) {
+    return next(err);
+  }
+  res.status(500).json(failed(err));
 }
