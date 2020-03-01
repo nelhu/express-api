@@ -1,5 +1,5 @@
 const express = require('express');
-const errorHandler = require('./middlewares/errorHandler');
+// const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 const port = 9000;
@@ -23,7 +23,7 @@ app.get('/error', (req, res) => {
   throw new Error('error occurred');
 });
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`app running at ${port}`);
