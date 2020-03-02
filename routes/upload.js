@@ -1,14 +1,8 @@
-const uuid = require('uuid/v4');
+const { v4: uuid } = require('uuid');
 const path = require('path');
 const fs = require('fs');
 const formidable = require('formidable');
 const { succeed, failed, handleProcess } = require('../utils');
-
-const form = formidable({
-  mutiples: true,
-  uploadDir: path.resolve(__dirname, './../static'),
-  keepExtensions: true,
-});
 
 const staticPath = '/www/wwwroot/root/assets';
 // const staticPath = '/Users/huxuezhi/Documents/private';
@@ -30,10 +24,16 @@ module.exports = function(app) {
   });
 
   app.post('/upload', (req, res, next) => {
-    handleProcess(req);
-    form.parse(req, (err, fields, _files) => {
+    // handleProcess(req);
+    const form = formidable({
+      mutiples: true,
+      uploadDir: path.resolve(__dirname, './../static'),
+      keepExtensions: true,
+    });
+
+    form.parse(req, async (err, fields, _files) => {
       console.log('fields', fields);
-      console.log('_files', _files);
+      Object.keys(_files).forEach(key => console.log(_files[key].path))
 
       if (err) {
         next(err);
@@ -43,8 +43,6 @@ module.exports = function(app) {
         acc.push(_files[key]);
         return acc;
       }, []);
-      console.log(files);
-
       const genFilePath = fileName => {
         const parts = fileName.split(/\./);
         const extension = parts[parts.length - 1];
@@ -53,20 +51,23 @@ module.exports = function(app) {
       // move
       const urls = [];
       try {
-        files.forEach(file => {
-          const fileName = genFilePath(file.name);
-          const newPath = `${staticPath}/${fileName}`;
-          const url = `${req.protocol}://${req.hostname}/assets/${fileName}`;
-          fs.renameSync(file.path, newPath);
-          urls.push(url);
-        })
+        const moveFile = async () => {
+          for(let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const fileName = genFilePath(file.name);
+            const newPath = `${staticPath}/${fileName}`;
+            const url = `${req.protocol}://${req.hostname}/assets/${fileName}`;
+            await fs.renameSync(file.path, newPath);
+            urls.push(url);
+          }
+        }
+        await moveFile();
         res.json(succeed({ urls }));
         console.log('上传完成');
       } catch (error) {
         console.error(error);
         next(error);
       }
-
     });
 
   });
