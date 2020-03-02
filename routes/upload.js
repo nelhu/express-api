@@ -57,12 +57,12 @@ module.exports = function(app) {
           fs.renameSync(file.path, newPath);
           urls.push(url);
         })
+        res.json(succeed({ urls }));
+        console.log('上传完成');
       } catch (error) {
         console.error(error);
         next(error);
       }
-      res.json(succeed({ urls }));
-      console.log('上传完成');
 
     });
 
