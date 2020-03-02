@@ -32,6 +32,9 @@ module.exports = function(app) {
   app.post('/upload', (req, res, next) => {
     handleProcess(req);
     form.parse(req, (err, fields, _files) => {
+      console.log('fields', fields);
+      console.log('_files', _files);
+
       if (err) {
         next(err);
         return;
