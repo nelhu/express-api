@@ -10,7 +10,9 @@
   "author": "nelson hu2",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "formidable": "^1.2.2",
+    "uuid": "^7.0.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
