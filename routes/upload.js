@@ -56,7 +56,7 @@ module.exports = function(app) {
             const file = files[i];
             const fileName = genFilePath(file.name);
             const newPath = `${staticPath}/${fileName}`;
-            const url = `${req.protocol}://${req.hostname}/assets/${fileName}`;
+            const url = `http://img.flashdragon.cn/${fileName}`;
             await fs.renameSync(file.path, newPath);
             urls.push(url);
           }
