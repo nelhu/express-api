@@ -8,8 +8,9 @@ const app = express();
 const port = 9000;
 
 app.use(cors());
-// handle static assets
-app.use('/static', staticHandler);
+app.use(express.json()); // parse application/json
+app.use(express.urlencoded({ extended: true })) // parse application/x-www-form-urlencoded
+app.use('/static', staticHandler); // handle static assets
 
 routes(app);
 
