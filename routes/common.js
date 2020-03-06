@@ -2,7 +2,7 @@ const { succeed, failed } = require('../utils');
 
 module.exports = function(app) {
   app.get('/', (req, res) => {
-    res.json(succeed('welcome to api page'));
+    res.json(succeed('welcome to api page, lalala'));
   });
 
   app.get('/time', (req, res) => {
