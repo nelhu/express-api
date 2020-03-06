@@ -22,4 +22,6 @@ mv -f $file_name $serve_path
 
 cd $serve_path
 
+del "${serve_path}build/"
+
 unzip $file_name
