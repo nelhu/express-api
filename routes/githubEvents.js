@@ -19,7 +19,7 @@ module.exports = function(app) {
         ref,
       } = req.body;
       const isAliyunSiteUI = repository.full_name === 'nelhu/aliyun-site-ui';
-      const isAliyunExpressApi = repository.full_name === 'nelhu/aliyun-express-api';
+      const isAliyunExpressApi = repository.full_name === 'nelhu/express-api';
       const [, , branchName] = ref.split('/');
       const isProduction = branchName === 'master';
       console.log(isAliyunSiteUI, branchName, isProduction);
