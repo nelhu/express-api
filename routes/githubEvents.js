@@ -20,6 +20,8 @@ module.exports = function(app) {
     const isAliyunSiteUI = repository.full_name === 'nelhu/aliyun-site-ui';
     const [, , branchName] = ref.split('/');
     const isProduction = branchName === 'master';
+    console.log(isAliyunSiteUI, branchName, isProduction);
+
     if (isAliyunSiteUI && isProduction) {
       const shellPath = path.resolve(__dirname, '../sh/deploy-aliyun-site-ui.sh');
       console.log(shellPath);
