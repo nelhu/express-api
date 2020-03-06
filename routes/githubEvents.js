@@ -19,12 +19,20 @@ module.exports = function(app) {
         ref,
       } = req.body;
       const isAliyunSiteUI = repository.full_name === 'nelhu/aliyun-site-ui';
+      const isAliyunExpressApi = repository.full_name === 'nelhu/aliyun-express-api';
       const [, , branchName] = ref.split('/');
       const isProduction = branchName === 'master';
       console.log(isAliyunSiteUI, branchName, isProduction);
 
-      if (isAliyunSiteUI && isProduction) {
-        const shellPath = path.resolve(__dirname, '../sh/deploy-aliyun-site-ui.sh');
+      if (isProduction) {
+        let shellName = '';
+        if (isAliyunSiteUI) {
+          shellName = 'deploy-aliyun-site-ui.sh';
+        }
+        if (isAliyunExpressApi) {
+          shellName = 'deploy-express-api.sh';
+        }
+        const shellPath = path.resolve(__dirname, `../sh/${shellName}`);
         console.log(shellPath);
         chmod(shellPath, '777')
           .then(() => {
